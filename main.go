@@ -1,17 +1,13 @@
 package main
 
-import "fmt"
-
 func main() {
-	cards := []string{newCard(), newCard(), "2 ♥"}
+	cards := deck{newCard(), newCard(), "2 ♥"}
 
 	//Add element
 	cards = append(cards, "4 ♣")
 
-	//Cycle
-	for i, card := range cards {
-		fmt.Println(i, card)
-	}
+	// Show cards
+	cards.print()
 }
 
 func newCard() string {
