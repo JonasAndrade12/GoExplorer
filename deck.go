@@ -6,6 +6,20 @@ import "fmt"
 // wich is a slice of strings
 type deck []string
 
+func newDeck() deck {
+	suits := []string{"♡","♠","♢","♣"}
+	values := deck{"2","3","4","5","6","7"}
+	cards := deck{}
+
+	for _, suit := range cardSuits {
+		for _, value := range values {
+			cards = append(cards, value + suit)
+		}
+	}
+
+	return cards
+}
+
 func (d deck) print() {
 
 	//Cycle
