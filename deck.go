@@ -14,7 +14,7 @@ type deck []string
 
 func newDeck() deck {
 	suits := []string{"♡", "♠", "♢", "♣"}
-	values := deck{"2", "3", "4", "5", "6", "7"}
+	values := []string{"2", "3", "4", "5", "6", "7", "8"}
 	cards := deck{}
 
 	for _, suit := range suits {
@@ -58,7 +58,6 @@ func readFromFile(filename string) deck {
 	s := strings.Split(string(bs), ",")
 	d := deck(s)
 
-	fmt.Println(s)
 	return d
 }
 
