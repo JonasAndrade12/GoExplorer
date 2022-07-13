@@ -1,16 +1,22 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"math/rand"
-	"strings"
 	"time"
 )
 
+// struct of a card
+type card struct {
+	Value string
+	Suit  string
+}
+
 // Create a new type of Deck
 // wich is a slice of strings
-type deck []string
+type deck []card
 
 func newDeck() deck {
 	suits := []string{"♡", "♠", "♢", "♣"}
@@ -19,7 +25,7 @@ func newDeck() deck {
 
 	for _, suit := range suits {
 		for _, value := range values {
-			cards = append(cards, value+suit)
+			cards = append(cards, card{Value: value, Suit: suit})
 		}
 	}
 
@@ -27,7 +33,6 @@ func newDeck() deck {
 }
 
 func (d deck) print() {
-
 	//Cycle
 	for i, card := range d {
 		fmt.Println(i, card)
@@ -39,7 +44,14 @@ func deal(d deck, handSize int) (deck, deck) {
 }
 
 func (d deck) toString() string {
-	return strings.Join([]string(d), ",")
+
+	out, err := json.Marshal(d)
+
+	if err != nil {
+		panic(err)
+	}
+
+	return string(out)
 }
 
 func (d deck) saveToFile(filename string) error {
@@ -47,6 +59,8 @@ func (d deck) saveToFile(filename string) error {
 }
 
 func readFromFile(filename string) deck {
+	var d deck
+
 	bs, err := ioutil.ReadFile(filename)
 
 	if err != nil {
@@ -55,8 +69,11 @@ func readFromFile(filename string) deck {
 		return newDeck()
 	}
 
-	s := strings.Split(string(bs), ",")
-	d := deck(s)
+	e := json.Unmarshal(bs, &d)
+
+	if e != nil {
+		panic(e)
+	}
 
 	return d
 }
