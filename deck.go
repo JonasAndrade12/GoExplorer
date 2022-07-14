@@ -89,3 +89,7 @@ func (d deck) shuffle() {
 		d[i], d[newPosition] = d[newPosition], d[i]
 	}
 }
+
+func (pointerToDeck *deck) addCard(card card) {
+	(*pointerToDeck) = append((*pointerToDeck), card)
+}
