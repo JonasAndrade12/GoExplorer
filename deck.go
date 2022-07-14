@@ -16,7 +16,10 @@ type card struct {
 
 // Create a new type of Deck
 // wich is a slice of strings
-type deck []card
+type deck struct {
+	Cards []card
+	Title string
+}
 
 func newDeck() deck {
 	suits := []string{"♡", "♠", "♢", "♣"}
@@ -25,7 +28,7 @@ func newDeck() deck {
 
 	for _, suit := range suits {
 		for _, value := range values {
-			cards = append(cards, card{Value: value, Suit: suit})
+			cards.Cards = append(cards.Cards, card{Value: value, Suit: suit})
 		}
 	}
 
@@ -34,13 +37,9 @@ func newDeck() deck {
 
 func (d deck) print() {
 	//Cycle
-	for i, card := range d {
+	for i, card := range d.Cards {
 		fmt.Println(i, card)
 	}
-}
-
-func deal(d deck, handSize int) (deck, deck) {
-	return d[:handSize], d[handSize:]
 }
 
 func (d deck) toString() string {
@@ -83,13 +82,13 @@ func (d deck) shuffle() {
 	source := rand.NewSource(time.Now().UnixNano())
 	r := rand.New(source)
 
-	for i := range d {
-		newPosition := r.Intn(len(d) - 1)
+	for i := range d.Cards {
+		newPosition := r.Intn(len(d.Cards) - 1)
 
-		d[i], d[newPosition] = d[newPosition], d[i]
+		d.Cards[i], d.Cards[newPosition] = d.Cards[newPosition], d.Cards[i]
 	}
 }
 
 func (pointerToDeck *deck) addCard(card card) {
-	(*pointerToDeck) = append((*pointerToDeck), card)
+	(*pointerToDeck).Cards = append((*pointerToDeck).Cards, card)
 }
