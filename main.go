@@ -1,6 +1,8 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+)
 
 func main() {
 	cards := newDeck()
@@ -14,6 +16,11 @@ func main() {
 	colors := make(map[string]string)
 	colors["white"] = "#fff"
 	colors["black"] = "#000"
-	delete(colors, "white")
-	fmt.Println(colors)
+	printMap(colors)
+}
+
+func printMap(c map[string]string) {
+	for color, hex := range c {
+		fmt.Println("Hex code for", color, "is", hex)
+	}
 }
